@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Графики</title>
+    </head>
+    <body>
+		<style>
+            *,*::after,*::before{
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+		<canvas id="canvas" width=1280px height=720px style="background:white"></canvas>
+		<script> 
+			var ctx=canvas.getContext("2d");
+			
+			function print (x1, y1, x2, y2, depth) {
+				if(depth === 0){
+					ctx.fillRect(x1, y1, 1, 1);
+					ctx.fillRect(x2, y2, 1, 1);
+					return;
+				}
+
+				var dx = (x2 - x1) / 2;
+				var dy = (y2 - y1) / 2;
+				var nx = x1 + dx - dy;
+				var ny = y1 + dx + dy;
+
+				print(x1, y1, nx, ny, depth - 1);
+				print(x2, y2, nx, ny, depth - 1);
+			}
+
+			print(1280/2-256, 720/2, 1280/2+256, 720/2, 20);
+		</script>
+    </body>
+</html>

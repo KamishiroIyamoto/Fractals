@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Дерево</title>
+    </head>
+    <body>
+        <style>
+            *,*::after,*::before{
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+		<canvas id="canvas" style="background:white"></canvas>
+		<script>
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+			let ctx=canvas.getContext("2d");            
+            ctx.strokeStyle = "#000";
+            ctx.lineWidth = 1.5;
+            let angle = 0;
+
+            let interval = setInterval(update, 15);
+
+            function update(){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                tree(canvas.width / 2, canvas.height / 2 + 430, -Math.PI / 2, 400, 9);
+                angle += 0.01;
+            }
+            function tree(x, y, dir, l, i){
+                let x1 = x + Math.cos(dir) * l;
+                let y1 = y + Math.sin(dir) * l;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x1, y1);
+                ctx.stroke();
+                if(i > 0){
+                    tree(x1, y1, dir, l * 0.5, i - 1);
+                    tree(x1, y1, dir + angle, l * 0.5, i - 1);
+                    tree(x1, y1, dir - angle, l * 0.5, i - 1);
+                }
+            }
+            update();
+		</script>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Дерево</title>
+    </head>
+    <body>
+        <style>
+            *,*::after,*::before{
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+		<canvas id="canvas" style="background:white"></canvas>
+		<script>
+            canvas.width = 800;
+            canvas.height = 800;
+            let ctx = canvas.getContext("2d");
+                      
+            let Ax = 5;
+            let Ay = canvas.height - 5;
+            let Bx = canvas.width / 2;
+            let By = 5;
+            let Cx = canvas.width - 5;
+            let Cy = canvas.height - 5;
+
+            let x = Ax;
+            let y = Ay;
+
+            let speed = 1000;
+            let time = setInterval(function(){
+                PrintPoints();
+                Pixel(x, y);
+                MovePoints();
+                PrintPoints();
+            }, 1000 / speed);
+
+            function PrintPoints(){
+                Point(Ax, Ay, 5);
+                Point(Bx, By, 5);
+                Point(Cx, Cy, 5);
+            }
+
+            function MovePoints(){
+                let _point = Random(0, 2);
+                if(_point === 0){
+                    x = (x + Ax) / 2;
+                    y = (y + Ay) / 2;
+                }
+                if(_point === 1){
+                    x = (x + Bx) / 2;
+                    y = (y + By) / 2;
+                }
+                if(_point === 2){
+                    x = (x + Cx) / 2;
+                    y = (y + Cy) / 2;
+                }
+            }
+
+            function Pixel(x, y){
+                ctx.fillRect(x, y, 1, 1);
+            }
+
+            function Point (x, y, r)
+            {
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+                ctx.fill();
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+
+            function Random(min, max)
+            {
+                return Math.floor(Math.random() * (max + 1 - min)) + min;
+            }
+		</script>
+    </body>
+</html>
